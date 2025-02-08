@@ -1,25 +1,54 @@
-import { Stack } from 'expo-router/stack';
+import { StatusBar } from 'react-native';
 import React from 'react';
 import "../global.css";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
-
+import { Text } from 'react-native';
 export default function Layout() {
   return (<>
-  <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer>
-      <Drawer.Screen
-          name="index" // This is the name of the page and must match the url from root
+    <StatusBar barStyle="light-content" backgroundColor="#000" />
+
+  <GestureHandlerRootView  >
+  <Drawer
+          screenOptions={{
+            drawerStyle: {
+              backgroundColor: '#000', 
+            },
+            drawerLabelStyle: {
+              color: '#fff', 
+            },
+            headerStyle: {
+              backgroundColor: '#000', 
+            },
+            headerTintColor: '#fff', 
+            headerShown: false,
+          }}
+        >
+     <Drawer.Screen
+            name="index"
+            options={{
+              drawerLabel: 'Home1',
+              title: 'Medicine Chatbot',
+              headerTitleAlign: 'center',
+              headerShown: true, 
+               
+            }}
+          />
+         <Drawer.Screen
+          name="(nobottombar)/account" 
           options={{
-            drawerLabel: 'Home',
-            title: 'Medical chatbot',
+            drawerLabel: 'Account',
+            title: 'Account Settings',
+            headerShown: true,
+            headerTitleAlign: 'center',
+        
           }}
         />
       </Drawer>
         
     </GestureHandlerRootView>
+   
   
       </>
   );
 }
- 

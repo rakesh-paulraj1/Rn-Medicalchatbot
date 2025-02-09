@@ -27,7 +27,17 @@ export default function Layout() {
      <Drawer.Screen
             name="index"
             options={{
-              drawerLabel: 'Home1',
+              drawerLabel: 'Landing Page',
+              title: 'Landing page',
+              headerTitleAlign: 'center',
+              headerShown: true, 
+               
+            }}
+          />
+           <Drawer.Screen
+            name="Chat"
+            options={{
+              drawerLabel: 'Open Chat',
               title: 'Medicine Chatbot',
               headerTitleAlign: 'center',
               headerShown: true, 

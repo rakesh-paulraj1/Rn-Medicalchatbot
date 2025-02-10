@@ -6,6 +6,10 @@ import { TextInput } from 'react-native-gesture-handler';
 import Feather from '@expo/vector-icons/Feather';
 import CustomKeyboardview from '@/components/CustomKeyboardview';
 const Chat = () => {
+  const handlesendMessage = () => {
+    console.log("message sent")
+  }
+
     const [messages, setMessages] = React.useState([]);
   return (
     <CustomKeyboardview inchat={true}>
@@ -22,11 +26,9 @@ const Chat = () => {
 </TouchableOpacity>
 
 </View>
-        
-
      </View>
     </View>
-    </CustomKeyboardview>
+     </CustomKeyboardview>
   )
 }
 

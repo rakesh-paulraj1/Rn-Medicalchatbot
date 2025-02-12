@@ -6,7 +6,7 @@ export default function MessageList(messages: any) {
   return (
     <ScrollView  showsVerticalScrollIndicator={false} className='bg-black flex-1'>
       <Text className='text-white'>MessageList
-        {messages.map((message,index)=>{
+        {messages.map((message: String, index: number) => {
             return <MessageItem message={message} key={index} userid={1} />
         })}
       </Text>

@@ -1,6 +1,6 @@
 import Colors from '@/constants/Colors';
 import { memo } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { StatusBar, StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, {
   interpolate,
   interpolateColor,
@@ -12,7 +12,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { ReText } from 'react-native-redash';
-
 
 const content = [
   {
@@ -43,7 +42,7 @@ const content = [
 ];
 
 const AnimatedIntro = () => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const ballWidth = 34;
   const half = width / 2 - ballWidth / 2;
 
@@ -178,16 +177,16 @@ const AnimatedIntro = () => {
   );
 
   return (
-    <Animated.View style={[style1]} className='flex-1'>
-      <Animated.View className='mt-75'>
-        <Animated.View style={[ballStyle]} className='w-10 h-10 bg-black rounded-full absolute left-0' />
-        <Animated.View className='absolute left-0 z-1 h-11' style={[ mask]} />
+    <Animated.View style={[styles.wrapper, style1, { width, height }]}>
+      <StatusBar backgroundColor={style1.backgroundColor}/>
+      <Animated.View style={[styles.content]}>
+        <Animated.View style={[styles.ball, ballStyle]} />
+        <Animated.View style={[styles.mask, mask]} />
         <ReText
           onLayout={(e) => {
             labelWidth.value = e.nativeEvent.layout.width + 4;
           }}
-          style={ textStyle}
-          className='absolute left-0 text-4xl font-semibold'
+          style={[styles.title, textStyle]}
           text={text}
         />
       </Animated.View>
@@ -195,6 +194,36 @@ const AnimatedIntro = () => {
   );
 };
 
-
-
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
+  mask: {
+    zIndex: 1,
+    position: 'absolute',
+    left: '0%',
+    height: 60,
+  },
+  ball: {
+    width: 40,
+    zIndex: 20,
+    height: 40,
+    backgroundColor: '#000',
+    borderRadius: 20,
+    position: 'absolute',
+    left: '0%',
+  },
+  titleText: {
+    flexDirection: 'row',
+  },
+  title: {
+    fontSize: 34,
+    fontWeight: '600',
+    left: '0%',
+    position: 'absolute',
+  },
+  content: {
+    marginTop: 300,
+  },
+});
 export default memo(AnimatedIntro);

@@ -1,62 +1,29 @@
-import { StatusBar } from 'react-native';
+import { StatusBar, TouchableOpacity } from 'react-native';
 import React from 'react';
 import "../global.css";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import { Text } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 export default function Layout() {
+  const router=useRouter( );
   return (<>
-    <StatusBar barStyle="light-content" backgroundColor="#000" />
+   
+<Stack>
+  <Stack.Screen name="index" options={{headerShown:false}}/>
+  <Stack.Screen  name="login" options={{presentation:'modal',headerTitle:" ", headerLeft:() =>{
+      return (
+    <TouchableOpacity onPress={()=>router.back()}>
+      <Ionicons name="close-outline" size={34} />
 
-  <GestureHandlerRootView  >
-  <Drawer
-          screenOptions={{
-            drawerStyle: {
-              backgroundColor: '#000', 
-            },
-            drawerLabelStyle: {
-              color: '#fff', 
-            },
-            headerStyle: {
-              backgroundColor: '#000', 
-            },
-            headerTintColor: '#fff', 
-            headerShown: false,
-          }}
-        >
-     <Drawer.Screen
-            name="index"
-            options={{
-              drawerLabel: 'Landing Page',
-              title: 'Landing page',
-              headerTitleAlign: 'center',
-              headerShown: true, 
-               
-            }}
-          />
-           <Drawer.Screen
-            name="Chat"
-            options={{
-              drawerLabel: 'Open Chat',
-              title: 'Medicine Chatbot',
-              headerTitleAlign: 'center',
-              headerShown: true, 
-               
-            }}
-          />
-         <Drawer.Screen
-          name="(nobottombar)/account" 
-          options={{
-            drawerLabel: 'Account',
-            title: 'Account Settings',
-            headerShown: true,
-            headerTitleAlign: 'center',
-        
-          }}
-        />
-      </Drawer>
-        
-    </GestureHandlerRootView>
+      
+    </TouchableOpacity>
+      );
+  }}}
+  />
+</Stack>
+
    
   
       </>

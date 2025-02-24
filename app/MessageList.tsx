@@ -3,7 +3,7 @@ import React from 'react'
 interface MessageListProps {
     messages: any[];
   }
-const MessageList: React.FC = ({ messages }) => {
+const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   return (
     <View className='bg-black flex-1'>
       <Text className='text-white'>MessageList

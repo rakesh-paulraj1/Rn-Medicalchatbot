@@ -1,4 +1,4 @@
-import { StatusBar, TouchableOpacity } from 'react-native';
+import { StatusBar, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import "../global.css";
 import { useEffect } from 'react';
@@ -27,6 +27,7 @@ const tokenCache = {
     }
   },
 };
+
 const Innerlayout=()=> {
   const router=useRouter( );
   const [loaded,error]=useFonts({
@@ -46,22 +47,28 @@ const Innerlayout=()=> {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
-  if(!loaded || isLoaded){
-    return<Slot/>
-  }
-  useEffect(()=>{
-   if(!isLoaded)return;
-    const inauthpage = segments[0]?.includes('(auth)');
-    console.log(inauthpage)
-    if(isSignedIn && !inauthpage){
-      //get the user inside because he has alredy been loddegn in 
-    router.replace('/')
-      }else if (!isSignedIn && inauthpage){
-    
-        router.replace('/')
-    
-      }},[isSignedIn])
 
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const inAuthGroup = segments[0] === '(auth)';
+console.log(inAuthGroup +" in auth group")
+console.log(isSignedIn +" is signed in")
+    if (isSignedIn && !inAuthGroup) {
+      router.replace('/(auth)');
+    } else if (!isSignedIn) {
+      router.replace('/login');
+    }
+  }, [isSignedIn]);
+  useEffect(() => {
+    console.log("Fonts loaded:", loaded);
+    console.log("Auth loaded:", isLoaded);
+  }, [loaded, isLoaded]);
+
+  if (!loaded || !isLoaded) {
+    return <View><Text>Loading
+    </Text></View>
+  }
   return (<>
    
 <Stack>
@@ -88,15 +95,17 @@ SplashScreen.preventAutoHideAsync();
  export default function  Layout()  {
  
   const publishablekey= process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string
-
+console.log(publishablekey);
 return (
   <ClerkProvider 
     publishableKey={publishablekey}
-    tokenCache={tokenCache}
+    tokenCache={tokenCache} 
   >
+    <ClerkLoaded>
     <GestureHandlerRootView className='flex-1'>
     <Innerlayout />
     </GestureHandlerRootView>
+    </ClerkLoaded>
  
   </ClerkProvider>
 );

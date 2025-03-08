@@ -1,14 +1,57 @@
-import { View, Text, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native'
+import { View, Text, KeyboardAvoidingView, Platform, ActivityIndicator,Alert } from 'react-native'
 import React, { useState } from 'react'
 import { useLocalSearchParams } from 'expo-router'
 import { Image, TextInput, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSignIn, useSignUp } from '@clerk/clerk-expo';
 
 const Page = () => {
-  const [email, setEmail] = useState('');
+  const [emailAddress, setemailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { type } = useLocalSearchParams<{ type: string }>();
+  const {signUp,isLoaded :signupisLoaded,setActive:signupsetActive}=useSignUp();
+  const {signIn,isLoaded,setActive}=useSignIn();
+  const onSigninPress= async ()=>{
+   if(!isLoaded)return;
+   setLoading(true);
+   try{
+    const result=await signIn.create({identifier:emailAddress,password});
+   console.log(result);
+
+   setActive({
+     session:result?.createdSessionId
+   });
+
+ }catch(e:any){
+     console.log(e);
+   Alert.alert('The Error is ⚠️'+e.errors[0].message);}
+
+   finally{
+     setLoading(false);
+   }
+  
+  }
+  const onSignupPress=async()=>{
+    if(!isLoaded)return;
+    setLoading(true);
+ 
+    try{
+     const result=await signUp?.create({emailAddress,password});
+    console.log(result);
+
+    signupsetActive?({
+      session:result?.createdSessionId
+    }):null;
+
+  }catch(e:any){
+      console.log(e);
+    Alert.alert('The Error is ⚠️'+e.errors[0].message);}
+
+    finally{
+      setLoading(false);
+    }}
+
 const bottom=useSafeAreaInsets();
   return (
     <KeyboardAvoidingView
@@ -30,8 +73,8 @@ const bottom=useSafeAreaInsets();
         <TextInput
           autoCapitalize='none'
           placeholder='Email'
-          onChangeText={setEmail}
-          value={email}
+          onChangeText={setemailAddress}
+          value={emailAddress}
           className='p-4 bg-gray-200 rounded-[3vw] mt-6 mb-4 w-full'
         />
         <TextInput

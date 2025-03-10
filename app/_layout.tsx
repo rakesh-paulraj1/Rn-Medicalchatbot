@@ -10,23 +10,9 @@ import { Text } from 'react-native';
 import { Slot, SplashScreen, Stack, useRouter, useSegments } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
+import { tokenCache } from '@/utils/cache'
 
-const tokenCache = {
-  async getToken(key: string) {
-    try {
-      return SecureStore.getItemAsync(key);
-    } catch (err) {
-      return null;
-    }
-  },
-  async saveToken(key: string, value: string) {
-    try {
-      return SecureStore.setItemAsync(key, value);
-    } catch (err) {
-      return;
-    }
-  },
-};
+
 
 const Innerlayout=()=> {
   const router=useRouter( );
@@ -36,6 +22,7 @@ const Innerlayout=()=> {
   const {isLoaded,isSignedIn}=useAuth();
   const segments=useSegments();
   
+
   
 
   useEffect(() => {
@@ -55,20 +42,19 @@ const Innerlayout=()=> {
 console.log(inAuthGroup +" in auth group")
 console.log(isSignedIn +" is signed in")
     if (isSignedIn && !inAuthGroup) {
-      router.replace('/(auth)');
+    console.log("pushing to index")
     } else if (!isSignedIn) {
       router.replace('/login');
     }
   }, [isSignedIn]);
-  useEffect(() => {
-    console.log("Fonts loaded:", loaded);
-    console.log("Auth loaded:", isLoaded);
-  }, [loaded, isLoaded]);
+  // useEffect(() => {
+  //   console.log("Fonts loaded:", loaded);
+  //   console.log("Auth loaded:", isLoaded);
+  //   console.log("Auth Signed In:", isSignedIn);
+  // }, [loaded, isLoaded, isSignedIn]);
 
-  if (!loaded || !isLoaded) {
-    return <View><Text>Loading
-    </Text></View>
-  }
+if(!loaded || !isLoaded)  return <View><Text>Loading...</Text></View>
+ 
   return (<>
    
 <Stack>
@@ -94,18 +80,27 @@ SplashScreen.preventAutoHideAsync();
 
  export default function  Layout()  {
  
-  const publishablekey= process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string
-console.log(publishablekey);
+  
+  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
+
+  if (!publishableKey) {
+    throw new Error('Add EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env')
+  }
+
 return (
   <ClerkProvider 
-    publishableKey={publishablekey}
+    publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string}
     tokenCache={tokenCache} 
   >
-    <ClerkLoaded>
+    
+
+   
+   
     <GestureHandlerRootView className='flex-1'>
     <Innerlayout />
     </GestureHandlerRootView>
-    </ClerkLoaded>
+    
+  
  
   </ClerkProvider>
 );

@@ -53,7 +53,7 @@ console.log(isSignedIn +" is signed in")
   //   console.log("Auth Signed In:", isSignedIn);
   // }, [loaded, isLoaded, isSignedIn]);
 
-if(!loaded || !isLoaded)  return <View><Text>Loading...</Text></View>
+// if(!loaded || !isLoaded)  return <View><Text>Loading...</Text></View>
  
   return (<>
    

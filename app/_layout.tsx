@@ -10,7 +10,8 @@ import { Text } from 'react-native';
 import { Slot, SplashScreen, Stack, useRouter, useSegments } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
-import { tokenCache } from '@/utils/cache'
+
+import { tokenCache } from '@clerk/clerk-expo/token-cache'
 
 
 
@@ -47,13 +48,13 @@ console.log(isSignedIn +" is signed in")
       router.replace('/login');
     }
   }, [isSignedIn]);
-  // useEffect(() => {
-  //   console.log("Fonts loaded:", loaded);
-  //   console.log("Auth loaded:", isLoaded);
-  //   console.log("Auth Signed In:", isSignedIn);
-  // }, [loaded, isLoaded, isSignedIn]);
+  useEffect(() => {
+    console.log("Fonts loaded:", loaded);
+    console.log("Auth loaded:", isLoaded);
+    console.log("Auth Signed In:", isSignedIn);
+  }, [loaded, isLoaded, isSignedIn]);
 
-// if(!loaded || !isLoaded)  return <View><Text>Loading...</Text></View>
+if(!loaded || !isLoaded)  return <View><Text>Loading...</Text></View>
  
   return (<>
    
@@ -92,10 +93,6 @@ return (
     publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string}
     tokenCache={tokenCache} 
   >
-    
-
-   
-   
     <GestureHandlerRootView className='flex-1'>
     <Innerlayout />
     </GestureHandlerRootView>

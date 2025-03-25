@@ -70,6 +70,7 @@ const bottom=useSafeAreaInsets();
         <Text className='mt-6 text-3xl font-bold text-black'>
           {type === 'login' ? 'Login' : 'Register'}
         </Text>
+       
         <TextInput
           autoCapitalize='none'
           placeholder='Email'

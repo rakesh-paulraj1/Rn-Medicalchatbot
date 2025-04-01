@@ -15,6 +15,7 @@ const Page = () => {
   const onSigninPress= async ()=>{
    if(!isLoaded)return;
    setLoading(true);
+   console.log("sign in pressed");
    try{
     const result=await signIn.create({identifier:emailAddress,password});
    console.log(result);
@@ -35,7 +36,7 @@ const Page = () => {
   const onSignupPress=async()=>{
     if(!isLoaded)return;
     setLoading(true);
- 
+ console.log("sign up pressed");
     try{
      const result=await signUp?.create({emailAddress,password});
     console.log(result);
@@ -86,7 +87,9 @@ const bottom=useSafeAreaInsets();
           secureTextEntry
           className='p-4 bg-gray-200 rounded-[3vw] mb-6 w-full'
         />
-        <TouchableOpacity className='bg-gray-900 p-4 rounded-[3vw] w-full items-center'>
+        <TouchableOpacity onPress={()=>{
+          {type === 'login ' ? onSigninPress(): onSignupPress()}
+        }} className='bg-gray-900 p-4 rounded-[3vw] w-full items-center' >
           <Text className='text-2xl text-white font-bold'>
             {type === 'login' ? 'Login' : 'Register'}
           </Text>

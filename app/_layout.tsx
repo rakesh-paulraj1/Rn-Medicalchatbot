@@ -1,4 +1,4 @@
-import { StatusBar, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, StatusBar, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import "../global.css";
 import { useEffect } from 'react';
@@ -22,9 +22,7 @@ const Innerlayout=()=> {
   })
   const {isLoaded,isSignedIn}=useAuth();
   const segments=useSegments();
-  
 
-  
 
   useEffect(() => {
     if (error) throw error;
@@ -37,39 +35,46 @@ const Innerlayout=()=> {
   }, [loaded]);
 
   useEffect(() => {
-    if (!isLoaded) return;
-
+    if (!isLoaded || !loaded) return;
+  
     const inAuthGroup = segments[0] === '(auth)';
-console.log(inAuthGroup +" in auth group")
-console.log(isSignedIn +" is signed in")
-    if (isSignedIn && !inAuthGroup) {
-    console.log("pushing to index")
-    } else if (!isSignedIn) {
-      router.replace('/login');
-    }
-  }, [isSignedIn]);
+    
+    if(isSignedIn && !inAuthGroup) {
+      router.replace('/(auth)')
+      console.log("User is signed in and not in auth group")}
+      else if(!isSignedIn && inAuthGroup) {
+router.replace('/')
+      }
+  }, [isSignedIn, isLoaded, loaded, segments]);
   useEffect(() => {
-    console.log("Fonts loaded:", loaded);
-    console.log("Auth loaded:", isLoaded);
+   
+    // console.log("Auth loaded:", isLoaded);
     console.log("Auth Signed In:", isSignedIn);
   }, [loaded, isLoaded, isSignedIn]);
+  if(!loaded || !isLoaded) {
+    return (
+      <View className='flex-1 items-center justify-center '>
+      <ActivityIndicator size='large' color='black' />
+      </View>
+    )
+  }
 
-if(!loaded || !isLoaded)  return <View><Text>Loading...</Text></View>
  
   return (<>
    
 <Stack>
   <Stack.Screen name="index" options={{headerShown:false}}/>
-  <Stack.Screen  name="login" options={{presentation:'modal',headerTitle:" ", headerLeft:() =>{
+  <Stack.Screen  name="login" options={{presentation:'modal',headerTitle:"", headerLeft:() =>{
       return (
     <TouchableOpacity onPress={()=>router.back()}>
-      <Ionicons name="close-outline" size={34} />
+      <Ionicons name="close-outline" size={31} />
 
       
     </TouchableOpacity>
       );
   }}}
   />
+  <Stack.Screen name='(auth)' options={{headerShown:false}}/>
 </Stack>
 
    

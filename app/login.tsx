@@ -88,7 +88,7 @@ const bottom=useSafeAreaInsets();
           className='p-4 bg-gray-200 rounded-[3vw] mb-6 w-full'
         />
         <TouchableOpacity onPress={()=>{
-          {type === 'login ' ? onSigninPress(): onSignupPress()}
+          {type === 'login' ? onSigninPress(): onSignupPress()}
         }} className='bg-gray-900 p-4 rounded-[3vw] w-full items-center' >
           <Text className='text-2xl text-white font-bold'>
             {type === 'login' ? 'Login' : 'Register'}

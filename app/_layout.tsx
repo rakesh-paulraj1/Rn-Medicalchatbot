@@ -40,7 +40,7 @@ const Innerlayout=()=> {
     const inAuthGroup = segments[0] === '(auth)';
     
     if(isSignedIn && !inAuthGroup) {
-      router.replace('/(auth)')
+      router.replace('/(auth)/(drawer)/(chat)/new')
       console.log("User is signed in and not in auth group")}
       else if(!isSignedIn && inAuthGroup) {
 router.replace('/')

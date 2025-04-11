@@ -4,14 +4,28 @@ import Drawer from 'expo-router/drawer'
 import { Ionicons } from '@expo/vector-icons'
 import { Link } from 'expo-router'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
+import { DrawerContentScrollView, DrawerItemList,DrawerItem } from '@react-navigation/drawer'
+import { TextInput } from 'react-native-gesture-handler'
 export const CustomDrawerContent = (props:any) => {
   const {bottom,top}=useSafeAreaInsets();
 return (
-  <View>
+  <View className='flex-1' style={{paddingBottom:bottom,paddingTop:top}}>
+<View className="flex-row pl-3 pr-3 items-center bg-gray-200 rounded-full pl-3 pr-3 px-4 py-2">
+  <Ionicons name="search-outline" size={20} color="black" className="mr-2" />
+  <TextInput
+    placeholder="Search"
+    className="flex-1 text-black"
+     // To remove outline on web
+  />
+</View>
     <DrawerContentScrollView {...props}>
 <DrawerItemList {...props} />
     </DrawerContentScrollView>
+    <View className='p-16 '  style={{paddingBottom:bottom}}>
+<Text>
+  Version 1
+</Text>
+    </View>
   </View>
 )
 }
@@ -23,7 +37,7 @@ const Layout = () => {
    screenOptions={{
     headerStyle:{
       backgroundColor:'white'
-    },drawerActiveBackgroundColor:'grey',
+    },
     drawerActiveTintColor:'black',}
    }
    >

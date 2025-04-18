@@ -15,7 +15,6 @@ return (
   <TextInput
     placeholder="Search"
     className="flex-1 text-black"
-     // To remove outline on web
   />
 </View>
     <DrawerContentScrollView {...props}>
@@ -23,6 +22,10 @@ return (
     </DrawerContentScrollView>
     <View className='p-16 '  style={{paddingBottom:bottom}}>
 <Text>
+  <Link href="/(auth)/(modal)/settings"  asChild>
+  <TouchableOpacity className='flex-row items-center'>
+    </TouchableOpacity>
+  </Link>
   Version 1
 </Text>
     </View>
@@ -56,7 +59,7 @@ const Layout = () => {
         </Link>
       )
     }} />
-     <Drawer.Screen name="(chat)/explore"
+     <Drawer.Screen name="/explore"
     options={{ title: 'Explore GPTs',drawerIcon:()=>(
       <View className=' rounded-full overflow-hidden  bg-gray-300 w-10 h-10 items-center justify-center'>
        <Ionicons name="apps-outline" size={24} color="black" />

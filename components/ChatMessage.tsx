@@ -5,21 +5,28 @@ import { View, Text,Image } from 'react-native'
 
 const ChatMessage = ({content,role,imageurl,prompt}:Message) => {
   return (
-    <View className='flex-row '>
-        {role==Role.Assistant ?(
-            <View className='mt-3 rounded-full  bg-black  '>
-               <Image source={require('@/assets/images/logo-white.png')} className='w-10 h-10 rounded-full' />
-             
-                </View>
-        ):(
-<View className=' w-30 h-30 rounded-full  mt-3  bg-white-200 items-center justify-center '>
-               
-<Ionicons name="person-outline" size={33}  color="black" />
-               
-                </View>
-        )}
-      <Text className='mt-3 text-lg p-4 '>{content}</Text>
-    </View>
+    <View className='flex-row items-start'>
+  <View className='flex-none'>
+    {role === Role.Assistant ? (
+      <View className='w-[40px] h-[40px] border-2 border-gray-400 rounded-full bg-black items-center justify-center'>
+        <Image 
+          source={require('@/assets/images/logo-white.png')} 
+          className='w-[24px] h-[24px]'
+          resizeMode='contain'
+        />
+      </View>
+    ) : (
+      <View className='w-[40px] h-[40px] rounded-full bg-gray-200 items-center justify-center'>
+        <Ionicons name="person-outline" size={24} color="black" />
+      </View>
+    )}
+  </View>
+
+  
+  <Text className='flex-1 mt-1 ml-3 text-xl '>
+    {content}
+  </Text>
+</View>
   )
 }
 

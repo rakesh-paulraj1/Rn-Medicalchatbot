@@ -21,13 +21,13 @@ return (
 <DrawerItemList {...props} />
     </DrawerContentScrollView>
     <View className='p-16 '  style={{paddingBottom:bottom}}>
-<Text>
+<View className='flex-row pl-3 pr-3 items-center bg-gray-200 rounded-full pl-3 pr-3 px-4 py-2'>
   <Link href="/(auth)/(modal)/settings"  asChild>
-  <TouchableOpacity className='flex-row items-center'>
+  <TouchableOpacity className='flex-row  items-center'>
+    <Text className='text-lg font-bold'>Settings</Text>
     </TouchableOpacity>
   </Link>
-  Version 1
-</Text>
+</View>
     </View>
   </View>
 )

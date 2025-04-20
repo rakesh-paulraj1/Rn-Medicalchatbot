@@ -2,7 +2,7 @@ import { Button, KeyboardAvoidingView, Platform, ScrollView, Text, View } from '
 import { useState } from 'react';
 import { useAuth } from '@clerk/clerk-expo';
 import { Image } from 'react-native';
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import Headerdropdown from '@/components/Headerdropdown';
 import Messageinput from '@/components/Messageinput';
 import Messageideas from '@/components/Messageideas';
@@ -10,10 +10,15 @@ import { Message } from '@/utils/Interface';
 import { Role } from '@/utils/Interface';
 import { FlatList } from 'react-native-gesture-handler';
 import ChatMessage from '@/components/ChatMessage';
+import { useMMKVString } from 'react-native-mmkv';
+import { Storage } from '@/utils/Storage';
 const Page = () => {
   const { signOut } = useAuth();
-  const [gptversion, setGptversion] = useState('3.5');
+  
 const [messages, setMessages] = useState<Message[]>([]);
+const [key,setKey] =useMMKVString('apikey',Storage)
+const [organization,setorganization] =useMMKVString('org',Storage)
+const [gptversion, setGptversion] =useMMKVString('gptversion',Storage) ;
 const DummyMessages: Message[] = [
   {
     content: 'Hello! How can I assist you today?',
@@ -35,12 +40,21 @@ const DummyMessages: Message[] = [
     content: 'You can start by asking me any question or describing your needs.',
     role: Role.Assistant,
   },
+  {
+    content: 'Hello! How can I assist you today?',
+    role: Role.Assistant,
+  },
+ 
 ];  
 const getcompletions = async (message: string) => {
     console.log('getcompletions', message);
     setMessages(DummyMessages);
   };
   
+  if(!key  || key===""|| !organization || organization===""){
+    return <Redirect href={'/(auth)/(modal)/settings'} />;
+  }
+    
   
   return (
     <View className="flex-1">
@@ -53,7 +67,7 @@ const getcompletions = async (message: string) => {
                 onSelect={(key) => {
                   setGptversion(key);
                 }}
-                selected={gptversion}
+                selected={gptversion ?? '3.5'}
                 items={[
                   { key: '3.5', title: 'GPT-3.5', icon: 'star_big_off' },
                   { key: '4.0', title: 'GPT-4.0', icon: 'star_on' },
@@ -76,8 +90,12 @@ const getcompletions = async (message: string) => {
     </View>
   </View>
    )}
-   <FlatList contentContainerStyle={{paddingBottom:150,paddingTop:30}} data={messages}   renderItem={({item})=><ChatMessage{...item}
+   <FlatList contentContainerStyle={{paddingBottom:150,paddingTop:30}}
+    data={messages}  
+    keyboardDismissMode='on-drag' 
+   renderItem={({item})=><ChatMessage{...item}
    />}
+
  />
       </View>
 
@@ -85,7 +103,6 @@ const getcompletions = async (message: string) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={ 0}>
           {/* {messages.length===0 && <Messageideas onSelectCard={getcompletions}/>} */}
-          
         <Messageinput onShouldSend={getcompletions} />
       </KeyboardAvoidingView>
     </View>

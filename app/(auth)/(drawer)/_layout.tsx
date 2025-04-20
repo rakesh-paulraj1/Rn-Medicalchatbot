@@ -59,7 +59,7 @@ const Layout = () => {
         </Link>
       )
     }} />
-     <Drawer.Screen name="/explore"
+     <Drawer.Screen name="explore"
     options={{ title: 'Explore GPTs',drawerIcon:()=>(
       <View className=' rounded-full overflow-hidden  bg-gray-300 w-10 h-10 items-center justify-center'>
        <Ionicons name="apps-outline" size={24} color="black" />
@@ -70,7 +70,7 @@ const Layout = () => {
             <Ionicons name="create-outline" size={24}  color="black" />
           </TouchableOpacity>
         </Link>
-      )
+      ),headerTitleAlign: 'center'
     }} />
    </Drawer>
   )

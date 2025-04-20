@@ -10,26 +10,24 @@ export type Headerdropdownprops={
 const Headerdropdown = ({title,selected,items,onSelect}:Headerdropdownprops) => {
   return (
     <DropdownMenu.Root>
-<DropdownMenu.Trigger>
- 
-<View className='flex-row items-center font-bold justify-center'>
-      <Text className='font-bold text text-xl'>{title}</Text>
+  <DropdownMenu.Trigger>
+    <View className='flex-row items-center font-bold justify-center'>
+      <Text className='font-bold text text-2xl'>{title}</Text>
       {selected && <Text className='text-gray-500 text text-xl font-bold'> {selected}&gt;</Text>}
-      
     </View>
-</DropdownMenu.Trigger>
-<DropdownMenu.Content>
-    {items.map((item)=>(
-        <DropdownMenu.Item key={item.key} onSelect={() => onSelect(item.key)}>
-           <DropdownMenu.ItemTitle>
+  </DropdownMenu.Trigger>
+  <DropdownMenu.Content>
+    {items.map((item) => (
+      <DropdownMenu.Item key={item.key} onSelect={() => onSelect(item.key)}>
+         <DropdownMenu.ItemIcon androidIconName={item.icon} />
+        <DropdownMenu.ItemTitle>
           {item.title}
-           </DropdownMenu.ItemTitle>
-        </DropdownMenu.Item>
+        </DropdownMenu.ItemTitle>
+       
+      </DropdownMenu.Item>
     ))}
-
-</DropdownMenu.Content>
-  
-    </DropdownMenu.Root>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
   )
 }
 
